@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Portfolio — Kavya Sreemai Chinta</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f6fa; color: #1a1a2e; }
+
+  header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    color: white;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+  }
+  header h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: 1px; }
+  header p { font-size: 1rem; color: #a0aec0; margin-top: 0.4rem; }
+  .degree-badge {
+    display: inline-block;
+    margin-top: 1rem;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 0.85rem;
+    color: #e2e8f0;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: white;
+    border-bottom: 2px solid #e2e8f0;
+    flex-wrap: wrap;
+  }
+  nav button {
+    border: none;
+    background: none;
+    padding: 1rem 1.8rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #718096;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  nav button.active { color: #0f3460; border-bottom-color: #0f3460; }
+  nav button:hover { color: #0f3460; background: #f7fafc; }
+
+  main { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem 3rem; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-intro {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.8rem;
+  }
+  .section-intro .icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .section-intro h2 { font-size: 1.4rem; font-weight: 700; color: #1a1a2e; }
+  .section-intro p { font-size: 0.85rem; color: #718096; }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .cert-card {
+    background: white;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cert-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+
+  .card-accent { height: 5px; }
+  .participation .card-accent { background: linear-gradient(90deg, #3182ce, #63b3ed); }
+  .achievement .card-accent { background: linear-gradient(90deg, #d69e2e, #f6e05e); }
+  .workshops .card-accent { background: linear-gradient(90deg, #38a169, #68d391); }
+  .academic .card-accent { background: linear-gradient(90deg, #805ad5, #b794f4); }
+
+  .card-body { padding: 1.1rem 1.2rem 1.2rem; }
+  .card-type {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .participation .card-type { color: #2b6cb0; }
+  .achievement .card-type { color: #975a16; }
+  .workshops .card-type { color: #276749; }
+  .academic .card-type { color: #553c9a; }
+
+  .card-body h3 { font-size: 1rem; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; line-height: 1.4; }
+  .card-body .org { font-size: 0.85rem; color: #4a5568; margin-bottom: 4px; }
+  .card-body .date { font-size: 0.8rem; color: #a0aec0; }
+
+  .highlight-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge-gold { background: #fefce8; color: #92400e; border: 1px solid #fde68a; }
+  .badge-blue { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+  .badge-green { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+
+  .stats-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+  }
+  .stat .num { font-size: 1.8rem; font-weight: 700; }
+  .stat .lbl { font-size: 0.78rem; color: #718096; margin-top: 2px; }
+  .stat.blue .num { color: #3182ce; }
+  .stat.gold .num { color: #d69e2e; }
+  .stat.green .num { color: #38a169; }
+  .stat.purple .num { color: #805ad5; }
+
+  .grade-card {
+    background: white;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+  }
+  .grade-header {
+    padding: 1rem 1.2rem;
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .grade-header h3 { font-size: 0.95rem; font-weight: 600; }
+  .grade-header .sgpa {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f6e05e;
+  }
+  .grade-header .sgpa span { font-size: 0.75rem; color: #a0aec0; }
+  .grade-body { padding: 1rem 1.2rem; }
+  .grade-row { display: flex; justify-content: space-between; font-size: 0.82rem; padding: 4px 0; border-bottom: 1px solid #f7fafc; }
+  .grade-row:last-child { border-bottom: none; }
+  .grade-row .course { color: #4a5568; }
+  .grade-row .grade { font-weight: 600; }
+  .grade-A-plus { color: #276749; }
+  .grade-A { color: #2b6cb0; }
+  .grade-B-plus { color: #744210; }
+  .grade-B { color: #975a16; }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: #a0aec0;
+    font-size: 0.82rem;
+    border-top: 1px solid #e2e8f0;
+    background: white;
+    margin-top: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Kavya Sreemai Chinta</h1>
+  <p>Amrita Vishwa Vidyapeetham Chennai Campus</p>
+  <div class="degree-badge">B.Tech · Automation &amp; Robotics Engineering · Roll No: CH.EN.U4ARE23002</div>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('overview')">Overview</button>
+  <button onclick="showTab('participation')">Participation</button>
+  <button onclick="showTab('achievement')">Achievements</button>
+  <button onclick="showTab('workshops')">Workshops</button>
+  <button onclick="showTab('academic')">Academic Records</button>
+</nav>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <div id="overview" class="section active">
+    <div class="stats-bar" style="margin-top:0.5rem;">
+      <div class="stat blue"><div class="num">8</div><div class="lbl">Participation</div></div>
+      <div class="stat gold"><div class="num">6</div><div class="lbl">Achievements</div></div>
+      <div class="stat green"><div class="num">4</div><div class="lbl">Workshops</div></div>
+      <div class="stat purple"><div class="num">5</div><div class="lbl">Semesters</div></div>
+    </div>
+
+    <div class="section-intro">
+      <div class="icon" style="background:#ebf8ff;">🏆</div>
+      <div><h2>Highlights</h2><p>Notable recognitions</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="cert-card achievement">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Grand Prize Winner</div>
+          <h3>SAEISS Autonomous Drone Development Challenge (ADDC) 2025–26</h3>
+          <div class="org">Team Quantum Realm · Karpaga Vinayaga College, Chengalpattu</div>
+          <div class="date">30–31 January 2026</div>
+          <span class="highlight-badge badge-gold">🥇 Grand Prize</span>
+          <span class="highlight-badge badge-gold">🥇 Best Payload Dropping System</span>
+        </div>
+      </div>
+      <div class="cert-card achievement">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Academic Excellence</div>
+          <h3>Campus Day '26 — Certificate of Appreciation (5th Semester)</h3>
+          <div class="org">Amrita Vishwa Vidyapeetham Chennai</div>
+          <div class="date">Academic Year 2025–26</div>
+          <span class="highlight-badge badge-gold">SGPA 9.26</span>
+        </div>
+      </div>
+      <div class="cert-card participation">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Research Paper Presentation</div>
+          <h3>AMMA-2025 International Conference</h3>
+          <div class="org">Amrita School of Engineering · IEEE Robotics &amp; Automation Society</div>
+          <div class="date">2–3 April 2025</div>
+          <span class="highlight-badge badge-blue">Paper: Dynamic Modeling &amp; Real-time Control of Robotic Exoskeleton</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTICIPATION -->
+  <div id="participation" class="section">
+    <div class="section-intro">
+      <div class="icon" style="background:#ebf8ff;">📜</div>
+      <div><h2>Certificates of Participation</h2><p>Conferences, Competitions &amp; Programs</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="cert-card participation">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">International Conference</div>
+          <h3>AMMA-2025 — Advancements in Materials, Manufacturing &amp; Automation</h3>
+          <div class="org">Amrita School of Engineering, Chennai · IEEE RAS · Scientific.Net</div>
+          <div class="date">2–3 April 2025</div>
+          <span class="highlight-badge badge-blue">Paper: Robotic Exoskeleton for Industrial Lifting</span>
+        </div>
+      </div>
+      <div class="cert-card participation">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Drone Competition</div>
+          <h3>SAEISS Autonomous Drone Development Challenge (ADDC) 2025–26 — Participation</h3>
+          <div class="org">Team Quantum Realm · SAEINDIA Southern Section</div>
+          <div class="date">30–31 January 2026</div>
+        </div>
+      </div>
+      <div class="cert-card participation">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Hackathon</div>
+          <h3>TNWISE 2026 — TANCAM's Hackathon for Women in Science &amp; Engineering</h3>
+          <div class="org">TANCAM · Periyar Maniammai Institute · Dassault Systèmes</div>
+          <div class="date">7 March 2026</div>
+        </div>
+      </div>
+      <div class="cert-card participation">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Workshop</div>
+          <h3>Ansys Solution for Robotic Workshop using Mech and CFD Tool</h3>
+          <div class="org">ARK Infosolutions Pvt. Ltd. in collaboration with Ansys · Amrita VV Chennai</div>
+          <div class="date">7–11 July 2025</div>
+        </div>
+      </div>
+      <div class="cert-card participation">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Skill Development Program</div>
+          <h3>Unmanned Ground Vehicles and its Applications</h3>
+          <div class="org">TiHAN Foundation, IIT Hyderabad · Amrita VV Chennai (DST NMICPS)</div>
+          <div class="date">22–26 July 2024</div>
+        </div>
+      </div>
+      <div class="cert-card participation">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Industry Certification</div>
+          <h3>2-Day Industry Certification Programme on Industrial Pneumatics</h3>
+          <div class="org">SMC Corporation (India) Pvt. Ltd. · Dept. of Mechanical Engineering, Amrita VV</div>
+          <div class="date">9–10 January 2025</div>
+        </div>
+      </div>
+      <div class="cert-card participation">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Technical Fest Event</div>
+          <h3>Flyway Fury — Tantrotsav '24</h3>
+          <div class="org">Amrita Vishwa Vidyapeetham Chennai Campus</div>
+          <div class="date">5–6 March 2024</div>
+        </div>
+      </div>
+      <div class="cert-card participation">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">RC Car Competition</div>
+          <h3>Old Town Road — KRIZEN '23</h3>
+          <div class="org">Dept. of Mechatronics Engineering · Sri Krishna College of Engineering and Technology, Coimbatore</div>
+          <div class="date">15 September 2023 · National Engineers' Day</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACHIEVEMENTS -->
+  <div id="achievement" class="section">
+    <div class="section-intro">
+      <div class="icon" style="background:#fefce8;">🌟</div>
+      <div><h2>Achievements &amp; Appreciations</h2><p>Awards, prizes &amp; academic recognition</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="cert-card achievement">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Grand Prize · ADDC 2025–26</div>
+          <h3>Certificate of Achievement — Grand Prize</h3>
+          <div class="org">SAEISS · Team Quantum Realm · Amrita VV Chennai</div>
+          <div class="date">30–31 January 2026</div>
+          <span class="highlight-badge badge-gold">🥇 Grand Prize Winner</span>
+        </div>
+      </div>
+      <div class="cert-card achievement">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">First Prize · ADDC 2025–26</div>
+          <h3>Certificate of Achievement — Best Payload Dropping System</h3>
+          <div class="org">SAEISS · Team Quantum Realm · Amrita VV Chennai</div>
+          <div class="date">30–31 January 2026</div>
+          <span class="highlight-badge badge-gold">🥇 First Prize</span>
+        </div>
+      </div>
+      <div class="cert-card achievement">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Academic Excellence</div>
+          <h3>Campus Day '26 — Certificate of Appreciation (Semester V)</h3>
+          <div class="org">Amrita Vishwa Vidyapeetham Chennai Campus</div>
+          <div class="date">Academic Year 2025–26</div>
+          <span class="highlight-badge badge-gold">SGPA 9.26</span>
+        </div>
+      </div>
+      <div class="cert-card achievement">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Academic Excellence</div>
+          <h3>Campus Day '25 — Certificate of Appreciation (Semester III)</h3>
+          <div class="org">Amrita Vishwa Vidyapeetham Chennai Campus</div>
+          <div class="date">Academic Year 2024–25</div>
+          <span class="highlight-badge badge-gold">SGPA 8.82</span>
+        </div>
+      </div>
+      <div class="cert-card achievement">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Academic Excellence</div>
+          <h3>Campus Day '26 — Certificate of Appreciation (Semester IV)</h3>
+          <div class="org">Amrita Vishwa Vidyapeetham Chennai Campus</div>
+          <div class="date">Academic Year 2024–25</div>
+          <span class="highlight-badge badge-gold">SGPA 8.94</span>
+        </div>
+      </div>
+      <div class="cert-card achievement">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Academic Excellence</div>
+          <h3>Campus Day '24 — Certificate of Honour (Semester I)</h3>
+          <div class="org">Amrita Vishwa Vidyapeetham Chennai Campus</div>
+          <div class="date">Academic Year 2023–24</div>
+          <span class="highlight-badge badge-gold">SGPA 8.71 · Second Rank</span>
+        </div>
+      </div>
+      <div class="cert-card achievement">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Environmental Contribution</div>
+          <h3>Certificate of Appreciation — Global Seedball Campaign</h3>
+          <div class="org">C20 India 2023 · UNESCO Chair · Amrita Vishwa Vidyapeetham</div>
+          <div class="date">2023</div>
+          <span class="highlight-badge badge-green">Sustainable &amp; Resilient Communities</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKSHOPS -->
+  <div id="workshops" class="section">
+    <div class="section-intro">
+      <div class="icon" style="background:#f0fff4;">🔧</div>
+      <div><h2>Workshops Attended</h2><p>Technical skill-building programs</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="cert-card workshops">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Robotics Workshop</div>
+          <h3>Workshop on ROS-2 (Robot Operating System)</h3>
+          <div class="org">IEEE RAS Student Chapter · Dept. of Mechanical Engineering · Amrita VV Chennai</div>
+          <div class="date">11–13 September 2025</div>
+          <span class="highlight-badge badge-green">IEEE Robotics &amp; Automation Society</span>
+        </div>
+      </div>
+      <div class="cert-card workshops">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Drones Workshop</div>
+          <h3>Drones: A Hands-on Workshop</h3>
+          <div class="org">IEEE RAS Student Chapter · Dept. of Mechanical Engineering · Amrita VV Chennai</div>
+          <div class="date">25–28 June 2025</div>
+          <span class="highlight-badge badge-green">IEEE Robotics &amp; Automation Society</span>
+        </div>
+      </div>
+      <div class="cert-card workshops">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">IoT &amp; Robotics Workshop</div>
+          <h3>Techo Workshop Series '24 Level 1 — IoT with Robotics (Make your own Bujji)</h3>
+          <div class="org">Techobytes Technologies · ChES IIT Madras · Chemplus'24</div>
+          <div class="date">3–4 August 2024</div>
+          <span class="highlight-badge badge-blue">IIT Madras · MSME Certified</span>
+        </div>
+      </div>
+      <div class="cert-card workshops">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-type">Robotics &amp; AI (Internship)</div>
+          <h3>ROBO AI Internship — BROOKS</h3>
+          <div class="org">Amrita Vishwa Vidyapeetham</div>
+          <div class="date">5 Jan 2026 – 31 Mar 2026</div>
+          <span class="highlight-badge badge-blue">Internship Certificate</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACADEMIC RECORDS -->
+  <div id="academic" class="section">
+    <div class="section-intro">
+      <div class="icon" style="background:#f5f3ff;">📊</div>
+      <div><h2>Academic Records</h2><p>Amrita School of Engineering · B.Tech Automation &amp; Robotics</p></div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat purple"><div class="num">8.87</div><div class="lbl">Current CGPA</div></div>
+      <div class="stat gold"><div class="num">9.26</div><div class="lbl">Best SGPA (Sem V)</div></div>
+      <div class="stat blue"><div class="num">5</div><div class="lbl">Semesters Completed</div></div>
+      <div class="stat green"><div class="num">113</div><div class="lbl">Credits Earned</div></div>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-header">
+        <div><h3>Semester I — Odd 2023–24</h3><div style="font-size:0.8rem;color:#a0aec0;">December 2023</div></div>
+        <div class="sgpa">8.71 <span>/ 10</span></div>
+      </div>
+      <div class="grade-body">
+        <div class="grade-row"><span class="course">Engineering Mechanics</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Computer Aided Drafting</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Engineering Chemistry C</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Programming in C</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Multivariable Calculus</span><span class="grade grade-A-plus">A+</span></div>
+      </div>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-header">
+        <div><h3>Semester II — Even 2023–24</h3><div style="font-size:0.8rem;color:#a0aec0;">May 2024</div></div>
+        <div class="sgpa">8.60 <span>/ 10</span></div>
+      </div>
+      <div class="grade-body">
+        <div class="grade-row"><span class="course">Thermo-Fluids</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Programming in C++</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Basic Electrical &amp; Electronics Engg. Lab</span><span class="grade grade-A-plus">A+</span></div>
+        <div class="grade-row"><span class="course">Engineering Physics C</span><span class="grade grade-A-plus">A+</span></div>
+      </div>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-header">
+        <div><h3>Semester III — Odd 2024–25</h3><div style="font-size:0.8rem;color:#a0aec0;">November 2024</div></div>
+        <div class="sgpa">8.82 <span>/ 10</span></div>
+      </div>
+      <div class="grade-body">
+        <div class="grade-row"><span class="course">Robot Kinematics</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Actuators and Drives</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Python Programming</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Differential Equations &amp; Numerical Methods</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Strategic Lessons from Mahabharata</span><span class="grade grade-A">A</span></div>
+      </div>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-header">
+        <div><h3>Semester IV — Even 2024–25</h3><div style="font-size:0.8rem;color:#a0aec0;">April 2025</div></div>
+        <div class="sgpa">8.94 <span>/ 10</span></div>
+      </div>
+      <div class="grade-body">
+        <div class="grade-row"><span class="course">Sensors and Signal Processing</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Robot Dynamics</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Additive Manufacturing</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Design of Machine Elements</span><span class="grade grade-A-plus">A+</span></div>
+        <div class="grade-row"><span class="course">Control Systems</span><span class="grade grade-A-plus">A+</span></div>
+        <div class="grade-row"><span class="course">Probability and Statistics</span><span class="grade grade-A-plus">A+</span></div>
+      </div>
+    </div>
+
+    <div class="grade-card">
+      <div class="grade-header">
+        <div><h3>Semester V — Odd 2025–26</h3><div style="font-size:0.8rem;color:#a0aec0;">November 2025</div></div>
+        <div class="sgpa" style="color:#68d391;">9.26 <span>/ 10</span></div>
+      </div>
+      <div class="grade-body">
+        <div class="grade-row"><span class="course">Introduction to Data Science</span><span class="grade grade-A-plus">A+</span></div>
+        <div class="grade-row"><span class="course">Microcontrollers and Embedded Systems</span><span class="grade grade-A-plus">A+</span></div>
+        <div class="grade-row"><span class="course">Fluid Power Systems for Industrial Automation</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Robotics and Control</span><span class="grade grade-A">A</span></div>
+        <div class="grade-row"><span class="course">Graph Theory Algorithms &amp; Complex Analysis</span><span class="grade grade-A-plus">A+</span></div>
+        <div class="grade-row"><span class="course">German for Beginners I</span><span class="grade grade-A-plus">A+</span></div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  Certificate Portfolio &nbsp;·&nbsp; Kavya Sreemai Chinta &nbsp;·&nbsp; Amrita Vishwa Vidyapeetham Chennai &nbsp;·&nbsp; B.Tech Automation &amp; Robotics Engineering
+</footer>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const tabs = ['overview','participation','achievement','workshops','academic'];
+    document.querySelectorAll('nav button')[tabs.indexOf(id)].classList.add('active');
+  }
+</script>
+</body>
+</html>
